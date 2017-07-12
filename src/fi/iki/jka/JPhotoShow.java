@@ -138,6 +138,13 @@ public class JPhotoShow extends JFrame {
             selected = 0;
         panel.setPhoto((JPhoto)photos.getElementAt(selected));
     }
+
+    public static JPhotoShow CreateAndRunNewShow(JPhotoCollection photos, int interval, JList list)
+    {
+        JPhotoShow ourShow = new JPhotoShow(photos, interval, list);
+        ourShow.setVisible(true);
+        return ourShow;
+    }
     
     public static void main(String args[]) {
         isStandalone = true;
