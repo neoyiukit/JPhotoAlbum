@@ -98,7 +98,9 @@ public class JPhotoFrame extends JFrame
     protected JFrame helpFrame = null;
     protected File photoDirectory = null;
 
-    public JPhotoShow photoShow = null;
+    private JPhotoShow photoShow = null;
+    
+    private int interval = 0;
     
     protected static HashMap allFrames = new HashMap();
     
@@ -582,27 +584,13 @@ public class JPhotoFrame extends JFrame
             showExif();
         }
         else if (cmd.equals(JPhotoMenu.A_SLIDESHOW)) {
-            if (photos.getSize()>0) {
-                //JPhotoShow.CreateAndRunNewShow(photos,5000,list);
-                this.photoShow = new JPhotoShow(photos,5000, list);
-                //JPhotoShow show = new JPhotoShow(photos, 5000, list);
-                this.photoShow.setVisible(true);
-            }
-            else
-                JOptionPane.showMessageDialog(this, "No photos to show!",
-                                              APP_NAME, JOptionPane.ERROR_MESSAGE);
-                
+            interval = 5000;
+            CreateAndRunSlideShow(photos, 5000, list);
+
         }
         else if (cmd.equals(JPhotoMenu.A_FSLIDESHOW)) {
-            if (photos.getSize()>0) {
-                //JPhotoShow.CreateAndRunNewShow(photos,5000,list);
-                this.photoShow = new JPhotoShow(photos,1000, list);
-                //JPhotoShow show = new JPhotoShow(photos, 5000, list);
-                this.photoShow.setVisible(true);
-            }
-            else
-                JOptionPane.showMessageDialog(this, "No photos to show!",
-                        APP_NAME, JOptionPane.ERROR_MESSAGE);
+            interval = 1000;
+            CreateAndRunSlideShow(photos, 1000, list);
 
         }
         else if (cmd.equals(JPhotoMenu.A_HELP)) {
@@ -640,6 +628,15 @@ public class JPhotoFrame extends JFrame
             System.out.println("Not implemented: "+cmd);
         
         setTitle();
+    }
+
+    protected void CreateAndRunSlideShow(JPhotoCollection photos, int interval, JPhotoList list) {
+        if (photos.getSize() > 0) {
+            this.photoShow = new JPhotoShow(photos, interval, list);
+            this.photoShow.setVisible(true);
+        } else
+            JOptionPane.showMessageDialog(this, "No photos to show!",
+                    APP_NAME, JOptionPane.ERROR_MESSAGE);
     }
 
     public void insertPhotos(String files[]) {
@@ -829,7 +826,11 @@ public class JPhotoFrame extends JFrame
             photos.setDirty(true);
         }
     }
-    
+
+    public int getInterval() {
+        return interval;
+    }
+
     /** Tell the list how big a view there is so that it can adjust display rows.
     */
     class ResizeAdapter extends ComponentAdapter {

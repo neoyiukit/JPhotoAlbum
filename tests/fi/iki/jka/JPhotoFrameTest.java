@@ -14,26 +14,20 @@ public class JPhotoFrameTest {
     public void StartSlideShowStartsASlideShow() throws Exception {
         ActionEvent event = new ActionEvent(this,1,JPhotoMenu.A_SLIDESHOW);
 
-        JPhotoCollection coll = new JPhotoCollection();
-        JPhoto photo = new JPhoto();
-        coll.add(0,photo);
-        JPhotoFrame frame = new JPhotoFrame("test", coll);
+        JPhotoFrameMock frame = new JPhotoFrameMock();
         frame.actionPerformed(event);
 
-        assertEquals(5000, frame.photoShow.interval);
+        assertEquals(5000, frame.getInterval());
     }
 
     @Test
     public void StartFastSlideShowStartsASlideShow() throws Exception {
         ActionEvent event = new ActionEvent(this,1,JPhotoMenu.A_FSLIDESHOW);
 
-        JPhotoCollection coll = new JPhotoCollection();
-        JPhoto photo = new JPhoto();
-        coll.add(0,photo);
-        JPhotoFrame frame = new JPhotoFrame("test", coll);
+        JPhotoFrameMock frame = new JPhotoFrameMock();
         frame.actionPerformed(event);
 
-        assertEquals(1000, frame.photoShow.interval);
+        assertEquals(1000, frame.getInterval());
     }
 
     @Test
@@ -41,14 +35,24 @@ public class JPhotoFrameTest {
         ActionEvent fastSlideShowAction = new ActionEvent(this,1,JPhotoMenu.A_FSLIDESHOW);
         ActionEvent standardSlideShowAction = new ActionEvent(this,1,JPhotoMenu.A_SLIDESHOW);
 
-        JPhotoCollection coll = new JPhotoCollection();
-        JPhoto photo = new JPhoto();
-        coll.add(0,photo);
-        JPhotoFrame frame = new JPhotoFrame("test", coll);
+        JPhotoFrameMock frame = new JPhotoFrameMock();
 
         frame.actionPerformed(standardSlideShowAction);
         frame.actionPerformed(fastSlideShowAction);
 
-        assertEquals(1000, frame.photoShow.interval);
+        assertEquals(1000, frame.getInterval());
     }
+}
+
+    class JPhotoFrameMock extends JPhotoFrame {
+        protected JPhotoFrameMock() throws Exception {
+        }
+
+        @Override
+        protected void CreateAndRunSlideShow(JPhotoCollection photos, int interval, JPhotoList list) {
+        }
+
+        @Override
+        public void setTitle(){
+        }
 }
