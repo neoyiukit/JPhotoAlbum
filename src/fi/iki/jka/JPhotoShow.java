@@ -37,10 +37,14 @@ public class JPhotoShow extends JFrame {
     public JPhotoShow(JPhotoCollection photos) {
         this(photos, 5000, null);
     }
+
+    public int interval;
     
     public JPhotoShow(JPhotoCollection photos, int interval, JList list) {
         this.photos = photos;
-        
+
+        this.interval = interval;
+
         panel = new JPhotoPanel();
         panel.setFullView(true);
         Container picPane = getContentPane();
@@ -137,13 +141,6 @@ public class JPhotoShow extends JFrame {
         if (selected>max)
             selected = 0;
         panel.setPhoto((JPhoto)photos.getElementAt(selected));
-    }
-
-    public static JPhotoShow CreateAndRunNewShow(JPhotoCollection photos, int interval, JList list)
-    {
-        JPhotoShow ourShow = new JPhotoShow(photos, interval, list);
-        ourShow.setVisible(true);
-        return ourShow;
     }
     
     public static void main(String args[]) {

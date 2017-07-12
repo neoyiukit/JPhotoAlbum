@@ -97,6 +97,8 @@ public class JPhotoFrame extends JFrame
     protected JPhotoExifDialog exifDialog = null;
     protected JFrame helpFrame = null;
     protected File photoDirectory = null;
+
+    public JPhotoShow photoShow = null;
     
     protected static HashMap allFrames = new HashMap();
     
@@ -581,14 +583,27 @@ public class JPhotoFrame extends JFrame
         }
         else if (cmd.equals(JPhotoMenu.A_SLIDESHOW)) {
             if (photos.getSize()>0) {
-                JPhotoShow.CreateAndRunNewShow(photos,5000,list);
-//                JPhotoShow show = new JPhotoShow(photos, 5000, list);
-//                show.setVisible(true);
+                //JPhotoShow.CreateAndRunNewShow(photos,5000,list);
+                this.photoShow = new JPhotoShow(photos,5000, list);
+                //JPhotoShow show = new JPhotoShow(photos, 5000, list);
+                this.photoShow.setVisible(true);
             }
             else
                 JOptionPane.showMessageDialog(this, "No photos to show!",
                                               APP_NAME, JOptionPane.ERROR_MESSAGE);
                 
+        }
+        else if (cmd.equals(JPhotoMenu.A_FSLIDESHOW)) {
+            if (photos.getSize()>0) {
+                //JPhotoShow.CreateAndRunNewShow(photos,5000,list);
+                this.photoShow = new JPhotoShow(photos,1000, list);
+                //JPhotoShow show = new JPhotoShow(photos, 5000, list);
+                this.photoShow.setVisible(true);
+            }
+            else
+                JOptionPane.showMessageDialog(this, "No photos to show!",
+                        APP_NAME, JOptionPane.ERROR_MESSAGE);
+
         }
         else if (cmd.equals(JPhotoMenu.A_HELP)) {
             displayHelp();
